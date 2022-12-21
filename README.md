@@ -73,6 +73,5 @@ function that stores entries given its title and markdown content.
 The edit_page function lets a user edit the entries while the save_edit allows the edit to be saved
 once the request is post and it displayes the content of the update.
 
-The random_page function uses random.choice from the random library and allows a user to get a random
-page.
+The random_page function uses random.choice from the random library and allows a user to get
 

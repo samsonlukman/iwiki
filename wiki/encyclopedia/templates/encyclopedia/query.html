@@ -1,16 +1,14 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    {{title}}
+    encyclopedia
 {% endblock %}
 
 {% block body %}
     <h1>Search Result</h1>
 
-    {{box_content}}
-
     <ul>
-        {% for entry in close_words %}
+        {% for entry in title %}
     {% if entry %}  
         <li><a href="{% url 'search' entry=entry %}">{{ entry }}</a></li>
     {% endif %}  

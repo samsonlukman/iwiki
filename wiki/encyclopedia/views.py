@@ -11,36 +11,61 @@ def index(request):
     })
 
 def user_entry(request, entry):
-    
-    if util.get_entry(entry) == None:
-        return render(request, "encyclopedia/error.html", {
-            "error": "The page you searched does not exist"
-        })
-    return render(request, "encyclopedia/user_entry.html", {
-        "title": util.get_entry(entry),
-        "box_content": markdown2.markdown(util.get_entry(entry))
+    title = entry
+    print(title)
+    content = util.get_entry(entry)
+    try:
+        return render(request, "encyclopedia/user_entry.html", {
+        "title": title,
+        "box_content": markdown2.markdown(content)
     })
 
+    except TypeError:
+        return render(request, "encyclopedia/error.html", {
+            "display": "The page you searched does not exist"
+        })
+    
 def query(request):
     if request.method == "POST":
         entry_search = request.POST['q']
-        title = util.get_entry(entry_search)
-        box_content = title
-        if title is not None:   
+        entry_content = util.get_entry(entry_search)
+        if entry_content is not None:
             return render(request, "encyclopedia/user_entry.html", {
-                "title": title,
-                "box_content": markdown2.markdown(box_content)
+                "title": entry_search,
+                "box_content": markdown2.markdown(entry_content)
             })
         else:
             entries_list = util.list_entries()
+            close_matches = get_close_matches(entry_search, entries_list)  
             close_words = []
-            close_match = get_close_matches(entry_search, entries_list)
-            for close_match in entries_list:
-                if entry_search.lower() in close_match.lower():
+            for close_match in close_matches:  
+                if entry_search.lower() in close_match:
                     close_words.append(close_match)
-            return render(request, "encyclopedia/query.html", {
-                "close_words": close_words
-            })
+                    return render(request, "encyclopedia/query.html", {
+                        "title": close_words,
+                        
+                    })
+                
+                elif entry_search.title() in close_match:
+                    close_words.append(close_match)
+                    return render(request, "encyclopedia/query.html", {
+                        "title": close_words,
+                        
+                    })
+                
+                elif entry_search.upper() in close_match:
+                    close_words.append(close_match)
+                    return render(request, "encyclopedia/query.html", {
+                        "title": close_words,
+                        
+                    })
+                
+            else:
+                return render(request, "encyclopedia/error.html", {
+                    "display": "No match found"
+                })
+            
+
 
         
 def new_page(request):
@@ -53,14 +78,14 @@ def new_page(request):
 
         if entry_exists is not None:
             return render(request, "encyclopedia/error.html", {
-                "error": "Page already exists"
+                "display": "Page already exists"
             })
 
         else:
             util.save_entry(title, box_content)
             return render(request, "encyclopedia/user_entry.html", {
                 "title": title,
-                "box_content": box_content
+                "box_content": markdown2.markdown(box_content)
                 
             })
 
@@ -72,6 +97,7 @@ def edit_page(request):
             "title": title,
             "box_content" : box_content
         })
+
 
 def save_edit(request):
     if request.method == "POST":
