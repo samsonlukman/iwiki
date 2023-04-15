@@ -36,3 +36,71 @@ textarea {
 .sidebar h2 {
     margin-top: 5px;
 }
+
+
+footer {
+    background-color: black;
+    color: white;
+
+}
+
+
+
+
+.alerts {
+    margin-top: 20px;
+   
+    padding: auto;
+    background-color: black;
+    color: white;
+    position: relative;
+    font-weight: bold;
+    text-align: center;
+}
+
+.about {
+    margin-top: 20px;
+   
+    padding: auto;
+    background-color: black;
+    color: white;
+    position: relative;
+    font-weight: bold;
+    text-align: center;
+    
+}
+
+.howto {
+    margin-top: 20px;
+  
+    padding: auto;
+    background-color: black;
+    color: white;
+    position: relative;
+    font-weight: bold;
+    text-align: center;
+}
+
+.data {
+    margin-top: 20px;
+    
+    padding: auto;
+    background-color: black;
+    color: white;
+    position: relative;
+    font-weight: bold;
+    text-align: center;
+}
+
+.image {
+    margin-top: 20px;
+    
+    padding: auto;
+    background-color: green;
+    color: white;
+    position: relative;
+    font-weight: bold;
+    text-align: center;
+}
+
+
