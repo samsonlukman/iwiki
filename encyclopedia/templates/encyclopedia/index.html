@@ -1,0 +1,29 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>All Pages</h1>
+
+                <ul class="list-group">
+                    {% for entry in entries %}
+                        {% if entry %}  
+                            <li class="list-group-item"><a href="{% url 'search' entry=entry %}">{{ entry }}</a></li>
+                        {% endif %}  
+                    {% endfor %}
+                </ul>
+
+                <!-- Using Django Python-enabled loop, we loop through entries from index function in views.py -->
+                <!-- The result (items) is returned as a list using html li tag and each of the returned value is linked -->
+                <!-- to the wiki/<str:entry> path by calling the search which is its placeholder and  -->
+                <!-- assigning <:entry> to the items that looped through entries.-->
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
